@@ -1,70 +1,68 @@
 # 🕹️ Gemini Game Lab
 
-**Google Cloud와 Gemini 2.5 Flash를 활용한 실시간 AI 웹게임 생성기**
+**A real-time AI web game generator powered by Google Cloud & Gemini 2.5 Flash.**
 
-이 프로젝트는 사용자가 입력한 간단한 자연어 프롬프트를 기반으로, Gemini AI가 즉석에서 완전한 HTML5 웹게임을 생성하는 과정을 보여주는 인터랙티브 데모입니다. 또한, 미리 만들어진 고품질의 레트로 게임 5종을 통해 Gemini의 코드 생성 능력과 결과물을 비교 체험할 수 있습니다.
-
-![UI Screenshot](https://storage.googleapis.com/gemini-prod/images/gemini_game_lab_ui_screenshot.png)
+This project is an interactive demo that showcases the ability of the Gemini AI to generate complete, playable HTML5 web games on the fly from simple, natural language prompts. It also allows users to experience and compare the results with high-quality, pre-built retro games.
 
 ---
 
-## ✨ 주요 기능 (Features)
+## ✨ Features
 
-* **🤖 실시간 AI 게임 생성**: "벽돌 깨기 게임"과 같은 간단한 프롬프트를 입력하면, Gemini가 즉시 해당 게임의 전체 코드를 생성하고 바로 플레이할 수 있도록 제공합니다.
-* **🎮 고품질 내장 게임**: 사용자가 직접 GCS 버킷에 업로드한 5종의 고품질 레트로 게임을 즉시 로드하여 즐길 수 있습니다.
-* **📚 동적 게임 요구서**: 내장 게임 선택 시, 해당 게임을 만들기 위한 상세한 프롬프트 예시(게임 요구서)를 확인할 수 있습니다.
-* **💡 Gemini 스토리텔링**: AI가 게임을 생성하는 동안, 해당 게임의 역사나 재미있는 사실들을 실시간으로 알려주어 지루할 틈이 없습니다.
-* **🌐 클라우드 기반 아키텍처**: 모든 인프라는 Google Cloud Run(백엔드)과 Cloud Storage(프론트엔드)를 통해 서버리스(Serverless)로 자동 배포 및 확장됩니다.
-* **🎨 Google Material 3 디자인**: Google의 최신 디자인 시스템을 적용하여 미려하고 직관적인 UI를 제공합니다.
+* **🤖 Real-time AI Game Generation**: Simply type a prompt like "a game to break bricks by hitting a ball," and Gemini will generate the full code for the game, ready to play instantly.
+* **🎮 High-Quality Pre-built Games**: Load and enjoy 5 high-quality retro games (hosted on GCS) to compare with the AI-generated ones.
+* **📚 Dynamic Game Specs**: When selecting a pre-built game, you can view a detailed prompt example (a "game requirement document") that could be used to create that game.
+* **💡 Gemini Storytelling**: While the AI generates a game, the storytelling panel provides real-time fun facts and history about the requested game genre.
+* **🌐 Cloud-Native Architecture**: The entire infrastructure is serverless, automatically deployed and scaled using Google Cloud Run for the backend and Cloud Storage for the frontend.
+* **🎨 Google Material 3 Design**: The UI is designed with Google's latest design system for a clean, intuitive, and beautiful user experience.
 
 ---
 
-## 📂 프로젝트 구조 (Project Structure)
+## 📂 Project Structure
 
+The repository contains the core application shell. The pre-built game files are fetched from a separate Google Cloud Storage bucket during runtime.
+```
 gemini-game-lab/
-├── deploy.sh               # 전체 배포를 위한 통합 스크립트
-├── README.md               # 프로젝트 설명 파일
-├── .gitignore              # Git 버전 관리 제외 파일
+├── deploy.sh               # All-in-one script for a full deployment
+├── README.md               # This project description file
+├── .gitignore              # Specifies intentionally untracked files
 └── src/
-├── backend/            # Cloud Run에 배포될 Python 백엔드
+├── backend/            # Python backend for Cloud Run
 │   ├── app.py
 │   ├── Dockerfile
 │   └── requirements.txt
-└── frontend/           # Cloud Storage에 배포될 프론트엔드
+└── frontend/           # Static assets for Cloud Storage
 ├── index.html
 └── assets/
 ├── main.js
 └── style.css
-
-> **참고**: 미리 만들어진 5개의 게임 파일(`game-htmls/`)과 요구서(`game-docs/`)는 이 리포지토리에 포함되어 있지 않습니다. 이 파일들은 `deploy.sh` 스크립트가 참조하는 Google Cloud Storage 버킷에 미리 업로드되어 있어야 합니다.
-
+```
+> **Note:** The pre-built game files (`game-htmls/`) and their requirement documents (`game-docs/`) are **not** included in this repository. They are expected to be pre-populated in the GCS bucket specified in `deploy.sh`.
 
 ---
 
-## 🚀 배포 방법 (Setup & Deployment)
+## 🚀 Setup & Deployment
 
-Cloud Shell 또는 Google Cloud SDK가 설치된 환경에서 아래의 단계를 따르세요.
+Follow these steps in a Google Cloud Shell or any environment with the Google Cloud SDK installed.
 
-1.  **리포지토리 클론**:
+1.  **Clone the Repository**:
     ```bash
     git clone [https://github.com/ldu1225/gemini-game-lab.git](https://github.com/ldu1225/gemini-game-lab.git)
     cd gemini-game-lab
     ```
 
-2.  **프로젝트 ID 설정**: `gcloud`가 올바른 GCP 프로젝트를 가리키고 있는지 확인합니다.
+2.  **Set Your Project ID**: Ensure `gcloud` is configured to use your GCP project.
     ```bash
     gcloud config set project [YOUR_GCP_PROJECT_ID]
     ```
 
-3.  **배포 스크립트 실행 권한 부여**:
+3.  **Grant Execute Permissions**:
     ```bash
     chmod +x deploy.sh
     ```
 
-4.  **스크립트 실행**: 스크립트를 실행하면 백엔드와 프론트엔드 배포가 자동으로 진행됩니다. 약 5분 정도 소요될 수 있습니다.
+4.  **Run the Deployment Script**: The script will automatically deploy the backend and frontend. This may take about 5 minutes.
     ```bash
     ./deploy.sh
     ```
 
-5.  **URL 접속**: 스크립트 실행이 완료되면 출력되는 최종 URL에 접속하여 데모를 확인합니다.
-
+5.  **Access the URL**: Once the script completes, it will output the final URL. Open this UR
