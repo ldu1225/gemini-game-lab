@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Game Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel"><div class="header"><h1><span style="color:#4285F4">G</span><span style="color:#EA4335">a</span><span style="color:#FBBC05">m</span><span style="color:#4285F4">e</span> <span style="color:#34A853">L</span><span style="color:#EA4335">a</span><span style="color:#FBBC05">b</span></h1><p class="subtitle">Powered by <b>Google Cloud & Gemini 2.5</b></p></div><div class="control-group"><h2>1. 게임 선택하기</h2><div class="spec-buttons"><button class="spec-btn" data-spec="tetris">🕹️</button><button class="spec-btn" data-spec="bubble-shooter">💥</button><button class="spec-btn" data-spec="snake">🐍</button><button class="spec-btn" data-spec="sudoku">🔢</button><button class="spec-btn" data-spec="galaxy-game">🚀</button></div></div><div class="control-group"><h2>2. 프롬프트로 만들기</h2><div class="prompt-group"><textarea id="prompt-input" placeholder="만들고 싶은 게임을 입력하세요..."></textarea><button id="generate-prompt-btn">게임 생성</button></div></div><div class="curation-box"><h2>Gemini 스토리텔링</h2><div id="status-box"></div></div></div>
+        <div class="game-panel"><div class="panel-header">Pre-built Games</div><div class="tabs"><button class="tab-btn" data-panel="middle" data-tab="code">Code</button><button class="tab-btn active" data-panel="middle" data-tab="preview">Preview</button><button class="tab-btn" data-panel="middle" data-tab="spec">게임 요구서</button></div><div id="code-view-middle" class="tab-content code-view"><pre><code id="code-middle" class="language-html"></code></pre></div><div id="preview-view-middle" class="tab-content preview-view active"><iframe id="game-frame-middle" class="game-frame" sandbox="allow-scripts allow-same-origin"></iframe></div><div id="spec-view-middle" class="tab-content spec-view"></div></div>
+        <div class="game-panel"><div class="panel-header">AI-Generated Games</div><div class="tabs"><button class="tab-btn active" data-panel="right" data-tab="code">Code</button><button class="tab-btn" data-panel="right" data-tab="preview">Preview</button></div><div id="code-view-right" class="tab-content code-view active"><pre><code id="code-right" class="language-html"></code></pre></div><div id="preview-view-right" class="tab-content preview-view"><iframe id="game-frame-right" class="game-frame" sandbox="allow-scripts allow-same-origin"></iframe></div></div>
+    </div>
+    <script>
+        window.APP_CONFIG = {
+            BACKEND_URL: "${SERVICE_URL}",
+            BUCKET_NAME: "${FRONTEND_BUCKET_NAME}"
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="assets/main.js"></script>
+</body>
+</html>
